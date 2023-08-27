@@ -12,7 +12,7 @@ Put the below blob in your repo under `.github/workflows/mal_npm_check.yml`
 
 (No need to put `GITHUB_TOKEN` in your github action secrets unless you do not want to use Github Action's [automated token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token))
 
-```
+```yaml
 name: Check for malicious npm dependencies
 
 on:
