@@ -3,6 +3,7 @@
 # KEEP THIS AS DEPENDENCY-FREE AS POSSIBLE
 import json
 import os
+import urllib
 from urllib.request import Request, urlopen
 import glob
 import time
@@ -89,8 +90,8 @@ def pull_github_npm_mal_pkgs(past_days=90):
 		
 		print(mal_advisories_url)
 		req = Request(mal_advisories_url, None, headers)
-		r = urlopen(req)
-		if r.status == 200:
+		try:
+			r = urlopen(req)
 			d = json.loads(r.read().decode())
 			for item in d:
 				for v in item['vulnerabilities']:
@@ -111,8 +112,11 @@ def pull_github_npm_mal_pkgs(past_days=90):
 			# 	break # done polling
 			# page += 1 
 			
-		else:
-			print('ERROR pulling github url:', r.status, r.read().decode())
+		except urllib.error.HTTPError as e:
+			# resp = r.read().decode()
+			print('ERROR pulling github url:', e)
+			if "rate limit exceeded" in str(e):
+				time.sleep(60)
 
 	return results
 
