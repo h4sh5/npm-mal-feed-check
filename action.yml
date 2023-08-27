@@ -8,5 +8,5 @@ runs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.10' 
-    - run: python3 npm_mal_check.py
+    - run: python3 $GITHUB_ACTION_PATH/npm_mal_check.py
       shell: bash
